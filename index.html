@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>호남제일고 대나무숲</title>
+  <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/img/android-chrome-192x192.png">
+  <link rel="apple-touch-icon" sizes="512x512" href="/img/android-chrome-512x512.png">
+  <link rel="manifest" href="/img/site.webmanifest">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+<script src="https://cdn.tailwindcss.com"></script>
+ <link href="https://cdn.jsdelivr.net/gh/toss/tossface/dist/tossface.css" rel="stylesheet" type="text/css" />
+    <style>
+        .tossface {
+          font-family: Tossface;
+          font-size: 1.2rem;
+        }
+      </style>
+<style>
+@font-face{font-family:'Pretendard';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Thin.woff2') format('woff2');font-weight:100;font-display:swap;}
+@font-face{font-family:'Pretendard';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-ExtraLight.woff2') format('woff2');font-weight:200;font-display:swap;}
+@font-face{font-family:'Pretendard';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Light.woff2') format('woff2');font-weight:300;font-display:swap;}
+@font-face{font-family:'Pretendard';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Regular.woff2') format('woff2');font-weight:400;font-display:swap;}
+@font-face{font-family:'Pretendard';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Medium.woff2') format('woff2');font-weight:500;font-display:swap;}
+@font-face{font-family:'Pretendard';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-SemiBold.woff2') format('woff2');font-weight:600;font-display:swap;}
+@font-face{font-family:'Pretendard';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Bold.woff2') format('woff2');font-weight:700;font-display:swap;}
+@font-face{font-family:'Pretendard';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-ExtraBold.woff2') format('woff2');font-weight:800;font-display:swap;}
+@font-face{font-family:'Pretendard';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Black.woff2') format('woff2');font-weight:900;font-display:swap;}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo',sans-serif;letter-spacing:-.01em;word-break:keep-all;background:#f5f5f7;}
+
+.glass{
+  background:rgba(255,255,255,0.88);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-bottom:0.5px solid rgba(0,0,0,0.07);
+}
+
+/* Category filter pills */
+.cat-pill{
+  display:inline-flex;align-items:center;padding:6px 16px;border-radius:99px;
+  font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;
+  border:1.5px solid rgba(0,0,0,0.10);background:#fff;color:#6e6e73;
+  transition:all .18s cubic-bezier(.4,0,.2,1);user-select:none;
+}
+.cat-pill:hover{border-color:rgba(0,0,0,0.22);color:#1d1d1f;}
+.cat-pill.active{color:#fff;border-color:transparent;box-shadow:0 2px 8px rgba(0,0,0,0.16);}
+.cat-pill.active[data-cat="전체"]{background:#1d1d1f;}
+.cat-pill.active[data-cat="잡담"]{background:#0066cc;}
+.cat-pill.active[data-cat="질문"]{background:#c06000;}
+.cat-pill.active[data-cat="정보"]{background:#1a7a44;}
+.cat-pill.active[data-cat="고백"]{background:#c0315e;}
+
+/* Compose category pills */
+.ccat{
+  display:inline-flex;align-items:center;padding:5px 14px;border-radius:99px;
+  font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;
+  border:1.5px solid rgba(0,0,0,0.10);color:#6e6e73;background:transparent;
+  transition:all .15s;
+}
+.ccat:hover{border-color:rgba(0,0,0,0.22);color:#1d1d1f;}
+.ccat.sel{color:#fff;border-color:transparent;}
+.ccat.sel[data-c="잡담"]{background:#0066cc;}
+.ccat.sel[data-c="질문"]{background:#c06000;}
+.ccat.sel[data-c="정보"]{background:#1a7a44;}
+.ccat.sel[data-c="고백"]{background:#c0315e;}
+
+/* Tag */
+.tag{font-size:10.5px;font-weight:600;padding:2px 8px;border-radius:5px;letter-spacing:.2px;}
+.tag-잡담{background:#dbeeff;color:#0055bb;}
+.tag-질문{background:#fff0d9;color:#a85000;}
+.tag-정보{background:#d8f5e7;color:#15683a;}
+.tag-고백{background:#fde4ee;color:#b0295a;}
+
+/* Post card */
+.post-card{
+  background:#fff;border:0.5px solid rgba(0,0,0,0.08);border-radius:18px;
+  overflow:hidden;transition:border-color .18s,box-shadow .18s;
+}
+.post-card:hover{border-color:rgba(0,0,0,0.14);box-shadow:0 2px 14px rgba(0,0,0,0.06);}
+
+/* Animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.post-card{animation:fadeUp .22s ease both;}
+@keyframes likePop{0%{transform:scale(1);}40%{transform:scale(1.45);}70%{transform:scale(.92);}100%{transform:scale(1);}}
+.like-pop{animation:likePop .32s cubic-bezier(.4,0,.2,1);}
+
+/* Comment section slide */
+.cmt-wrap{overflow:hidden;max-height:0;transition:max-height .3s cubic-bezier(.4,0,.2,1);}
+.cmt-wrap.open{max-height:9999px;}
+
+/* Modal */
+.modal-bg{background:rgba(0,0,0,0.42);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
+@keyframes modalUp{from{opacity:0;transform:translateY(20px) scale(.97);}to{opacity:1;transform:translateY(0) scale(1);}}
+.modal-card{animation:modalUp .26s cubic-bezier(.34,1.4,.64,1) both;}
+
+/* Info tabs */
+.info-tab{padding:7px 0;font-size:13px;font-weight:500;border-radius:8px;cursor:pointer;transition:all .15s;color:#6e6e73;text-align:center;flex:1;}
+.info-tab.active{background:#1d1d1f;color:#fff;}
+
+/* Toast */
+#toast{
+  position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(10px);
+  background:#1d1d1f;color:#fff;font-size:13px;font-weight:500;padding:10px 22px;
+  border-radius:99px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;
+  white-space:nowrap;z-index:9999;
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* Spinner */
+@keyframes spin{to{transform:rotate(360deg);}}
+.spinner{width:20px;height:20px;border:2px solid rgba(0,0,0,0.08);border-top-color:#1d1d1f;border-radius:50%;animation:spin .7s linear infinite;margin:48px auto;}
+
+/* Highlight */
+@keyframes hlPulse{0%{box-shadow:0 0 0 0 rgba(0,0,0,0.15);}70%{box-shadow:0 0 0 6px rgba(0,0,0,0);}100%{box-shadow:0 0 0 0 rgba(0,0,0,0);}}
+.hl-pulse{animation:hlPulse .8s ease 2;}
+
+::-webkit-scrollbar{width:3px;height:3px;}
+::-webkit-scrollbar-thumb{background:rgba(0,0,0,.1);border-radius:3px;}
+textarea{resize:none;field-sizing:content;min-height:44px;max-height:160px;}
+
+/* Consent popup */
+@keyframes consentUp{from{opacity:0;transform:translateY(100%);}to{opacity:1;transform:translateY(0);}}
+#consentPopup{animation:consentUp .38s cubic-bezier(.32,1.2,.54,1) both;}
+
+/* Policy modal */
+@keyframes policyUp{from{opacity:0;transform:translateY(30px) scale(.97);}to{opacity:1;transform:translateY(0) scale(1);}}
+.policy-modal{animation:policyUp .28s cubic-bezier(.34,1.2,.64,1) both;}
+
+/* Policy body */
+.policy-body h3{font-size:14px;font-weight:600;color:#1d1d1f;margin:20px 0 6px;}
+.policy-body h3:first-child{margin-top:0;}
+.policy-body p,.policy-body li{font-size:13px;color:#4e4e53;line-height:1.75;}
+.policy-body ul{padding-left:16px;list-style:disc;}
+.policy-body li{margin-bottom:3px;}
+.policy-body .date{font-size:11px;color:#9ca3af;margin-bottom:16px;}
+
+/* FAB buttons */
+#fabGroup{position:fixed;right:20px;bottom:28px;z-index:150;display:flex;flex-direction:column;align-items:flex-end;gap:10px;}
+.fab{display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;transition:all .2s cubic-bezier(.34,1.3,.64,1);}
+.fab:hover{transform:scale(1.08);}
+.fab:active{transform:scale(.94);}
+.fab-main{width:48px;height:48px;border-radius:50%;background:#1d1d1f;box-shadow:0 4px 16px rgba(0,0,0,0.18);}
+.fab-main:hover{box-shadow:0 6px 20px rgba(0,0,0,0.24);}
+.fab-secondary{height:40px;border-radius:99px;background:#fff;border:0.5px solid rgba(0,0,0,0.1);box-shadow:0 2px 12px rgba(0,0,0,0.10);padding:0 14px;gap:6px;font-size:12px;font-weight:500;color:#1d1d1f;white-space:nowrap;}
+.fab-secondary:hover{box-shadow:0 4px 16px rgba(0,0,0,0.14);}
+
+/* FAB label tooltip */
+.fab-tip{position:absolute;right:56px;background:#1d1d1f;color:#fff;font-size:11px;font-weight:500;padding:4px 10px;border-radius:8px;white-space:nowrap;pointer-events:none;opacity:0;transform:translateX(4px);transition:opacity .15s,transform .15s;}
+.fab-wrap:hover .fab-tip{opacity:1;transform:translateX(0);}
+.fab-wrap{position:relative;display:flex;align-items:center;}
+
+/* Feedback modal */
+@keyframes fbUp{from{opacity:0;transform:translateY(24px) scale(.97);}to{opacity:1;transform:translateY(0) scale(1);}}
+.fb-modal{animation:fbUp .26s cubic-bezier(.34,1.2,.64,1) both;}
+
+/* Scroll-to-top visibility */
+#fabScrollTop{opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;}
+#fabScrollTop.visible{opacity:1;pointer-events:auto;}
+
+/* Report modal */
+@keyframes reportUp{from{opacity:0;transform:translateY(20px) scale(.97);}to{opacity:1;transform:translateY(0) scale(1);}}
+.report-modal{animation:reportUp .24s cubic-bezier(.34,1.2,.64,1) both;}
+.report-chip{display:inline-flex;align-items:center;padding:7px 14px;border-radius:99px;font-size:13px;font-weight:500;border:1.5px solid rgba(0,0,0,0.09);color:#6e6e73;cursor:pointer;transition:all .15s;background:#fff;width:100%;}
+.report-chip:hover{border-color:rgba(0,0,0,0.2);color:#1d1d1f;}
+.report-chip.sel{background:#1d1d1f;color:#fff;border-color:#1d1d1f;}
+/* reported post dim */
+.post-card.reported-mine{opacity:.6;}
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- HEADER -->
+<header class="glass sticky top-0 z-50">
+  <div class="max-w-2xl mx-auto px-4 flex items-center justify-between h-[52px]">
+    <div class="flex items-center gap-2.5">
+      <span class="text-[15px] font-bold text-[#1d1d1f] tracking-tight">호남제일고 대나무숲 🫥</span>
+    </div>
+    <button onclick="openMyInfo()"
+      class="flex items-center gap-1.5 text-[13px] font-medium text-[#1d1d1f] bg-white border border-black/10 px-4 py-[7px] rounded-full shadow-sm hover:bg-gray-50 active:scale-95 transition-all">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      내 정보
+    </button>
+  </div>
+  <!-- Category pills -->
+  <div class="max-w-2xl mx-auto px-4 pb-3 pt-1">
+    <div class="flex gap-2 overflow-x-auto" style="scrollbar-width:none;">
+      <button class="cat-pill active" data-cat="전체" onclick="setFilter(this)">전체</button>
+      <button class="cat-pill" data-cat="잡담" onclick="setFilter(this)">잡담</button>
+      <button class="cat-pill" data-cat="질문" onclick="setFilter(this)">질문</button>
+      <button class="cat-pill" data-cat="정보" onclick="setFilter(this)">정보</button>
+      <button class="cat-pill" data-cat="고백" onclick="setFilter(this)">고백</button>
+    </div>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="max-w-2xl mx-auto px-4 pt-4 pb-8">
+  <!-- Compose -->
+  <div class="bg-white border border-black/[.07] rounded-[20px] shadow-sm mb-4 overflow-hidden">
+    <div class="px-4 pt-4 pb-3">
+      <input id="newTitle" type="text" maxlength="80" placeholder="제목을 입력하세요"
+        class="w-full text-[15px] font-semibold text-[#1d1d1f] placeholder-gray-300 bg-transparent border-none outline-none"/>
+      <div class="h-px bg-gray-100 my-2.5"></div>
+      <textarea id="newBody" placeholder="내용을 자유롭게 적어주세요 (선택)"
+        class="w-full text-[14px] text-[#1d1d1f] placeholder-gray-300 bg-transparent border-none outline-none leading-relaxed"></textarea>
+    </div>
+    <div class="px-4 py-2.5 border-t border-black/[.05] flex items-center justify-between gap-3">
+      <div class="flex gap-1.5 overflow-x-auto" style="scrollbar-width:none;" id="composeCats">
+        <button class="ccat sel" data-c="잡담" onclick="selectCat(this)">잡담</button>
+        <button class="ccat" data-c="질문" onclick="selectCat(this)">질문</button>
+        <button class="ccat" data-c="정보" onclick="selectCat(this)">정보</button>
+        <button class="ccat" data-c="고백" onclick="selectCat(this)">고백</button>
+      </div>
+      <button id="submitBtn" onclick="submitPost()"
+        class="flex-shrink-0 bg-[#1d1d1f] text-white text-[13px] font-medium px-4 py-[8px] rounded-[10px] hover:opacity-80 active:scale-95 transition-all whitespace-nowrap">
+        작성하기
+      </button>
+    </div>
+  </div>
+
+  <!-- Feed -->
+  <div id="loadingState"><div class="spinner"></div></div>
+  <div id="feed" class="flex flex-col gap-3"></div>
+  <div id="emptyState" class="hidden text-center py-16 text-[14px] text-gray-300">게시글이 없습니다</div>
+</main>
+
+
+<!-- MY INFO MODAL -->
+<div id="infoModal" class="fixed inset-0 z-[200] hidden items-center justify-center p-4 modal-bg"
+     onclick="if(event.target===this)closeMyInfo()">
+  <div class="modal-card bg-white rounded-[24px] w-full max-w-sm shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
+    <!-- Header -->
+    <div class="px-6 pt-6 pb-4 border-b border-black/[.05] flex-shrink-0">
+      <div class="flex items-start justify-between mb-3">
+        <p class="text-[18px] font-bold text-[#1d1d1f] tracking-tight">내 정보</p>
+        <button onclick="closeMyInfo()" class="text-gray-300 hover:text-gray-500 transition-colors">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <!-- UID -->
+      <div class="bg-gray-50 border border-black/[.07] rounded-[14px] p-3.5 mb-3">
+        <p class="text-[10px] font-semibold text-gray-400 tracking-widest uppercase mb-1.5">고유 식별 ID</p>
+        <p id="uidDisplay" class="text-[15px] font-bold text-[#1d1d1f] font-mono tracking-wider"></p>
+        <p class="text-[11px] text-gray-400 mt-1.5 leading-relaxed">이 ID는 최초 1회 생성되며 변경되지 않습니다.</p>
+      </div>
+      <!-- Anon notice -->
+      <div class="bg-blue-50 border border-blue-100 rounded-[12px] p-3 mb-3 flex gap-2">
+        <svg class="flex-shrink-0 mt-px" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <p class="text-[11px] text-blue-700 leading-relaxed">글·댓글을 작성할 때마다 새로운 익명 닉네임이 자동 부여됩니다. 같은 글 안에서는 동일한 닉네임이 유지되어 대화가 구분됩니다.</p>
+      </div>
+      <!-- Warning -->
+      <div class="bg-amber-50 border border-amber-200 rounded-[12px] p-3 flex gap-2">
+        <svg class="flex-shrink-0 mt-px" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <p class="text-[11px] text-amber-800 leading-relaxed">욕설·비방·허위사실 게시물은 제재되며, 수사기관 요청 시 고유 ID를 포함한 정보가 협조될 수 있습니다.</p>
+      </div>
+    </div>
+    <!-- Stats -->
+    <div class="px-6 py-4 border-b border-black/[.05] flex-shrink-0">
+      <p class="text-[12px] font-semibold text-gray-400 mb-3">내 활동 통계</p>
+      <div class="grid grid-cols-3 gap-2">
+        <div class="bg-gray-50 rounded-[14px] p-3 text-center">
+          <p class="text-[22px] font-bold text-[#1d1d1f]" id="statPosts">—</p>
+          <p class="text-[11px] text-gray-400 mt-0.5">작성한 글</p>
+        </div>
+        <div class="bg-gray-50 rounded-[14px] p-3 text-center">
+          <p class="text-[22px] font-bold text-[#e0334c]" id="statLikes">—</p>
+          <p class="text-[11px] text-gray-400 mt-0.5">좋아요</p>
+        </div>
+        <div class="bg-gray-50 rounded-[14px] p-3 text-center">
+          <p class="text-[22px] font-bold text-[#0066cc]" id="statComments">—</p>
+          <p class="text-[11px] text-gray-400 mt-0.5">댓글</p>
+        </div>
+      </div>
+    </div>
+    <!-- Tabs -->
+    <div class="px-6 py-3 border-b border-black/[.05] flex-shrink-0">
+      <div class="flex gap-1 bg-gray-100 rounded-[10px] p-1">
+        <button class="info-tab active" data-tab="written" onclick="setInfoTab(this)">내가 쓴 글</button>
+        <button class="info-tab" data-tab="liked" onclick="setInfoTab(this)">좋아요</button>
+        <button class="info-tab" data-tab="commented" onclick="setInfoTab(this)">댓글 단 글</button>
+      </div>
+    </div>
+    <div id="infoList" class="px-4 py-3 overflow-y-auto flex flex-col gap-2 flex-1 min-h-[80px]"></div>
+    <div class="px-6 pb-6 pt-2 flex-shrink-0">
+      <button onclick="closeMyInfo()" class="w-full bg-[#1d1d1f] text-white text-[14px] font-medium py-3.5 rounded-[14px] hover:opacity-85 active:scale-[.98] transition-all">확인</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script>
+const _0x4b0a17=_0x5983;(function(_0x221052,_0x5dc945){const _0x23dd9c=_0x5983,_0xed558d=_0x221052();while(!![]){try{const _0xa9f156=-parseInt(_0x23dd9c(0x1a2))/0x1*(parseInt(_0x23dd9c(0x195))/0x2)+-parseInt(_0x23dd9c(0x157))/0x3*(parseInt(_0x23dd9c(0x106))/0x4)+-parseInt(_0x23dd9c(0x12a))/0x5*(parseInt(_0x23dd9c(0x193))/0x6)+-parseInt(_0x23dd9c(0x16b))/0x7+-parseInt(_0x23dd9c(0x187))/0x8+parseInt(_0x23dd9c(0x164))/0x9*(parseInt(_0x23dd9c(0x186))/0xa)+-parseInt(_0x23dd9c(0x1bf))/0xb*(-parseInt(_0x23dd9c(0x199))/0xc);if(_0xa9f156===_0x5dc945)break;else _0xed558d['push'](_0xed558d['shift']());}catch(_0x34a45c){_0xed558d['push'](_0xed558d['shift']());}}}(_0x1d20,0x3d972),firebase[_0x4b0a17(0x1aa)]({'apiKey':'AIzaSyAHT-B1MAQSZuZh_CFsE0pO56LQXyDqYt4','authDomain':_0x4b0a17(0x104),'databaseURL':_0x4b0a17(0x148),'projectId':'school-community-bd1d4','storageBucket':_0x4b0a17(0x130),'messagingSenderId':_0x4b0a17(0x10b),'appId':'1:268633783083:web:62875a6103724c215ca36e'}));const db=firebase[_0x4b0a17(0x18b)](),postsRef=db[_0x4b0a17(0x116)](_0x4b0a17(0x128)),$=_0x1e8023=>document[_0x4b0a17(0x1a5)](_0x1e8023);function esc(_0x3b1e62){const _0x43433b=_0x4b0a17;return String(_0x3b1e62||'')['replace'](/&/g,_0x43433b(0x112))['replace'](/</g,_0x43433b(0x10e))[_0x43433b(0x197)](/>/g,'&gt;')['replace'](/"/g,_0x43433b(0x19d));}function relTime(_0x350f55){const _0x18a516=_0x4b0a17,_0x5da19c=(Date[_0x18a516(0x1cb)]()-_0x350f55)/0x3e8;if(_0x5da19c<0x5)return'방금';if(_0x5da19c<0x3c)return~~_0x5da19c+'초\x20전';if(_0x5da19c<0xe10)return~~(_0x5da19c/0x3c)+_0x18a516(0x162);if(_0x5da19c<0x15180)return~~(_0x5da19c/0xe10)+_0x18a516(0x121);return~~(_0x5da19c/0x15180)+'일\x20전';}function toast(_0x2f0268,_0xf4c821=0x898){const _0x21e46f=_0x4b0a17,_0x2d06b3=$('toast');_0x2d06b3['textContent']=_0x2f0268,_0x2d06b3[_0x21e46f(0x178)]['add']('show'),clearTimeout(_0x2d06b3['_t']),_0x2d06b3['_t']=setTimeout(()=>_0x2d06b3[_0x21e46f(0x178)][_0x21e46f(0x198)](_0x21e46f(0x188)),_0xf4c821);}function genUID(){const _0x3a5a44=_0x4b0a17,_0x1737a6='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let _0x1a99e6='U';for(let _0xfd75ac=0x0;_0xfd75ac<0x3;_0xfd75ac++){_0x1a99e6+='-';for(let _0x2f12c2=0x0;_0x2f12c2<0x4;_0x2f12c2++)_0x1a99e6+=_0x1737a6[~~(Math['random']()*_0x1737a6[_0x3a5a44(0x137)])];}return _0x1a99e6;}let myUID;try{myUID=localStorage['getItem'](_0x4b0a17(0x14a))||'',!myUID&&(myUID=genUID(),localStorage[_0x4b0a17(0x125)](_0x4b0a17(0x14a),myUID));}catch(_0x5e3a67){myUID=genUID();}const ADJ=['파란','초록','노란','빠른',_0x4b0a17(0x173),'따뜻한','차가운','밝은',_0x4b0a17(0x159),'신기한',_0x4b0a17(0x134),'멋진',_0x4b0a17(0x1d4),_0x4b0a17(0x1d5),_0x4b0a17(0x160),'조그만',_0x4b0a17(0x1ac),'당찬','느긋한','설레는'],NOUN=[_0x4b0a17(0x158),'강아지','토끼','여우','곰','펭귄',_0x4b0a17(0x14c),'사자','호랑이','늑대','너구리','수달',_0x4b0a17(0x17f),'오리','하마','기린','코끼리','판다',_0x4b0a17(0x119),_0x4b0a17(0x1ae)],SESSION_SALT=Math['random']()[_0x4b0a17(0x1cd)](0x24)[_0x4b0a17(0x1bb)](0x2);function hashStr(_0x5e0acb){const _0x537a56=_0x4b0a17;let _0x2fa428=0x0;for(let _0x5c69c3 of _0x5e0acb)_0x2fa428=_0x2fa428*0x1f+_0x5c69c3[_0x537a56(0x135)](0x0)&0x7fffffff;return _0x2fa428;}function getNick(_0x1b7dbf,_0x28d52e){const _0x78290=_0x4b0a17,_0x36f515=hashStr(_0x1b7dbf+_0x28d52e+SESSION_SALT);return ADJ[_0x36f515%ADJ[_0x78290(0x137)]]+'\x20'+NOUN[~~(_0x36f515/0x15)%NOUN['length']];}function _0x5983(_0x4fa2b6,_0x4ea5fb){_0x4fa2b6=_0x4fa2b6-0x104;const _0x1d20bf=_0x1d20();let _0x598345=_0x1d20bf[_0x4fa2b6];return _0x598345;}let posts={},bans={},currentCat='전체',openedCmts=new Set(),composeCat='잡담',currentInfoTab=_0x4b0a17(0x110),firstLoad=!![];function safeKey(_0x927fa6){const _0x44b52b=_0x4b0a17;return _0x927fa6[_0x44b52b(0x197)](/[.#$[\]/]/g,'_');}function isBanned(_0x52d899){const _0xa2d63d=_0x4b0a17,_0x16a20f=bans[safeKey(_0x52d899)];if(!_0x16a20f)return![];if(_0x16a20f['duration']===0x0)return!![];return _0x16a20f[_0xa2d63d(0x11a)]>Date[_0xa2d63d(0x1cb)]();}db[_0x4b0a17(0x116)]('bans')['on'](_0x4b0a17(0x11b),_0x3bd9d8=>{const _0x124312=_0x4b0a17;bans=_0x3bd9d8[_0x124312(0x122)]()||{};}),postsRef[_0x4b0a17(0x194)]('ts')['on']('value',_0x57824d=>{const _0x39d752=_0x4b0a17,_0x1a6090=_0x57824d['val']()||{},_0x89bc8f=Object[_0x39d752(0x10c)](_0x1a6090)[_0x39d752(0x124)]((_0x578659,_0x282cfe)=>_0x282cfe[0x1]['ts']-_0x578659[0x1]['ts']);posts={},_0x89bc8f['forEach'](([_0x3681dd,_0x5ba562])=>{_0x5ba562['id']=_0x5ba562['id']||_0x3681dd,posts[_0x3681dd]=_0x5ba562;}),$(_0x39d752(0x114))[_0x39d752(0x178)][_0x39d752(0x18a)](_0x39d752(0x1b4)),renderFeed(firstLoad),firstLoad=![];});function setFilter(_0x2e2877){const _0x1db0c8=_0x4b0a17;document[_0x1db0c8(0x1c6)](_0x1db0c8(0x156))[_0x1db0c8(0x105)](_0x25afbb=>_0x25afbb[_0x1db0c8(0x178)]['remove'](_0x1db0c8(0x1a7))),_0x2e2877['classList'][_0x1db0c8(0x18a)](_0x1db0c8(0x1a7)),currentCat=_0x2e2877[_0x1db0c8(0x118)][_0x1db0c8(0x1c9)],renderFeed();}function selectCat(_0x5ee205){const _0x43cf5c=_0x4b0a17;document[_0x43cf5c(0x1c6)](_0x43cf5c(0x11f))[_0x43cf5c(0x105)](_0x5c5074=>_0x5c5074[_0x43cf5c(0x19f)]=_0x43cf5c(0x139)),_0x5ee205[_0x43cf5c(0x19f)]=_0x43cf5c(0x1a1),composeCat=_0x5ee205[_0x43cf5c(0x118)]['c'];}function renderFeed(_0xd23468=![]){const _0x5e6601=_0x4b0a17,_0x494069=$(_0x5e6601(0x136)),_0x22eca8=$(_0x5e6601(0x1b1)),_0x417656=Object[_0x5e6601(0x14f)](posts)[_0x5e6601(0x169)](_0x41ecd3=>currentCat==='전체'||_0x41ecd3[_0x5e6601(0x1c9)]===currentCat);if(!_0x417656[_0x5e6601(0x137)]){_0x494069['innerHTML']='',_0x22eca8[_0x5e6601(0x178)]['remove']('hidden');return;}_0x22eca8[_0x5e6601(0x178)]['add'](_0x5e6601(0x1b4)),_0x494069[_0x5e6601(0x1c0)]=_0x417656['map']((_0x4d442e,_0x6d57ff)=>renderPost(_0x4d442e,_0xd23468?_0x6d57ff:-0x1))[_0x5e6601(0x1d3)]('');}function renderPost(_0xb47e6e,_0x96826=0x0){const _0x143dc3=_0x4b0a17,_0x28c02c=_0xb47e6e[_0x143dc3(0x131)]&&_0xb47e6e[_0x143dc3(0x131)][myUID],_0x1e18e9=_0xb47e6e[_0x143dc3(0x185)]===myUID,_0x419779=openedCmts[_0x143dc3(0x13b)](_0xb47e6e['id']),_0x54cc2f=_0xb47e6e[_0x143dc3(0x131)]?Object[_0x143dc3(0x176)](_0xb47e6e[_0x143dc3(0x131)])['length']:0x0,_0x3f3791=_0xb47e6e[_0x143dc3(0x152)]?Object['values'](_0xb47e6e[_0x143dc3(0x152)])['sort']((_0x3e239d,_0xd18e0a)=>_0x3e239d['ts']-_0xd18e0a['ts']):[],_0x4bce93=_0x96826>=0x0?Math[_0x143dc3(0x1cf)](_0x96826*0x23,0xc8):0x0,_0x397d68=getNick(_0xb47e6e[_0x143dc3(0x185)],_0xb47e6e['id']);return _0x143dc3(0x1c4)+_0xb47e6e['id']+'\x22\x20style=\x22'+(_0x4bce93?'animation-delay:'+_0x4bce93+'ms':'')+_0x143dc3(0x17a)+_0xb47e6e['id']+'\x27)\x22>\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22flex\x20items-center\x20gap-2\x20mb-2\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22tag\x20tag-'+_0xb47e6e[_0x143dc3(0x1c9)]+'\x22>'+_0xb47e6e[_0x143dc3(0x1c9)]+_0x143dc3(0x1c8)+esc(_0x397d68)+(_0x1e18e9?_0x143dc3(0x180):'')+_0x143dc3(0x145)+relTime(_0xb47e6e['ts'])+'</span>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20<p\x20class=\x22text-[15px]\x20font-bold\x20text-[#1d1d1f]\x20leading-snug\x20mb-1\x22>'+esc(_0xb47e6e[_0x143dc3(0x1b2)])+'</p>\x0a\x20\x20\x20\x20\x20\x20'+(_0xb47e6e[_0x143dc3(0x1b5)]?'<p\x20class=\x22text-[13px]\x20text-[#6e6e73]\x20leading-relaxed\x22>'+esc(_0xb47e6e[_0x143dc3(0x1b5)])+_0x143dc3(0x147):'')+'\x0a\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20<div\x20class=\x22px-4\x20py-2.5\x20border-t\x20border-black/[.05]\x20flex\x20items-center\x20gap-4\x22>\x0a\x20\x20\x20\x20\x20\x20<button\x20id=\x22likeBtn_'+_0xb47e6e['id']+_0x143dc3(0x13e)+_0xb47e6e['id']+_0x143dc3(0x14b)+(_0x28c02c?_0x143dc3(0x1c5):'#c0c0c8')+_0x143dc3(0x12e)+_0xb47e6e['id']+_0x143dc3(0x123)+(_0x28c02c?'#e0334c':'none')+_0x143dc3(0x16d)+(_0x28c02c?_0x143dc3(0x1c5):_0x143dc3(0x196))+_0x143dc3(0x168)+_0xb47e6e['id']+'\x22>'+_0x54cc2f+_0x143dc3(0x18f)+_0xb47e6e['id']+_0x143dc3(0x183)+_0xb47e6e['id']+'\x22>'+_0x3f3791[_0x143dc3(0x137)]+'</span>\x0a\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20'+(!_0x1e18e9?_0x143dc3(0x140)+_0xb47e6e['id']+_0x143dc3(0x1c7)+_0xb47e6e['id']+'\x27)\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20class=\x22ml-auto\x20flex\x20items-center\x20gap-1\x20text-[12px]\x20text-[#d0d0d8]\x20hover:text-[#e0334c]\x20transition-colors\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<svg\x20width=\x2213\x22\x20height=\x2213\x22\x20viewBox=\x220\x200\x2024\x2024\x22\x20fill=\x22none\x22\x20stroke=\x22currentColor\x22\x20stroke-width=\x222\x22\x20stroke-linecap=\x22round\x22><path\x20d=\x22M4\x2015s1-1\x204-1\x205\x202\x208\x202\x204-1\x204-1V3s-1\x201-4\x201-5-2-8-2-4\x201-4\x201z\x22/><line\x20x1=\x224\x22\x20y1=\x2222\x22\x20x2=\x224\x22\x20y2=\x2215\x22/></svg>\x0a\x20\x20\x20\x20\x20\x20\x20\x20신고\x0a\x20\x20\x20\x20\x20\x20</button>':'')+_0x143dc3(0x165)+_0xb47e6e['id']+_0x143dc3(0x170)+(_0x419779?_0x143dc3(0x11d):'')+_0x143dc3(0x151)+_0xb47e6e['id']+'\x22>'+renderCmtList(_0x3f3791,_0xb47e6e['id'])+'</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22flex\x20gap-2\x20items-center\x20px-4\x20py-2.5\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<input\x20id=\x22ci_'+_0xb47e6e['id']+_0x143dc3(0x1b8)+_0xb47e6e['id']+_0x143dc3(0x166)+_0xb47e6e['id']+_0x143dc3(0x141);}function renderCmtList(_0x3432b1,_0x3e7aa8){const _0x8d4c35=_0x4b0a17;if(!_0x3432b1[_0x8d4c35(0x137)])return'';return _0x3432b1[_0x8d4c35(0x1ba)](_0x5832d4=>_0x8d4c35(0x189)+esc(getNick(_0x5832d4[_0x8d4c35(0x185)],_0x3e7aa8))+(_0x5832d4[_0x8d4c35(0x185)]===myUID?_0x8d4c35(0x180):'')+_0x8d4c35(0x1b9)+relTime(_0x5832d4['ts'])+_0x8d4c35(0x191)+(_0x5832d4[_0x8d4c35(0x185)]!==myUID?'<button\x20onclick=\x22openReport(event,\x27comment\x27,\x27'+_0x3e7aa8+_0x8d4c35(0x1c7)+_0x5832d4['id']+_0x8d4c35(0x154):'')+_0x8d4c35(0x107)+esc(_0x5832d4['text'])+_0x8d4c35(0x18c))['join']('');}function toggleLike(_0x51c6c0,_0x430e38){const _0x581de2=_0x4b0a17;_0x51c6c0[_0x581de2(0x19e)]();const _0x130cce=posts[_0x430e38];if(!_0x130cce)return;const _0x36b1d7=_0x130cce[_0x581de2(0x131)]&&_0x130cce[_0x581de2(0x131)][myUID];if(_0x36b1d7)db['ref']('posts/'+_0x430e38+_0x581de2(0x190)+myUID)[_0x581de2(0x198)]();else db[_0x581de2(0x116)](_0x581de2(0x1c1)+_0x430e38+'/likes/'+myUID)[_0x581de2(0x1a0)](!![]);const _0x4ee870=!_0x36b1d7,_0x10ac9b=_0x4ee870?'#e0334c':_0x581de2(0x196),_0x382017=$(_0x581de2(0x179)+_0x430e38),_0x3615c3=$('hsvg_'+_0x430e38),_0x1cfa07=$(_0x581de2(0x16c)+_0x430e38);_0x382017&&_0x3615c3&&_0x1cfa07&&(_0x382017[_0x581de2(0x15b)][_0x581de2(0x138)]=_0x10ac9b,_0x3615c3['setAttribute'](_0x581de2(0x143),_0x10ac9b),_0x3615c3[_0x581de2(0x192)](_0x581de2(0x16a),_0x4ee870?'#e0334c':_0x581de2(0x12c)),_0x1cfa07[_0x581de2(0x1d1)]=Math[_0x581de2(0x18e)](0x0,(_0x130cce['likes']?Object[_0x581de2(0x176)](_0x130cce[_0x581de2(0x131)])['length']:0x0)+(_0x4ee870?0x1:-0x1)),_0x382017[_0x581de2(0x178)][_0x581de2(0x198)](_0x581de2(0x15e)),void _0x382017[_0x581de2(0x1ca)],_0x382017[_0x581de2(0x178)][_0x581de2(0x18a)](_0x581de2(0x15e)),_0x382017[_0x581de2(0x15a)](_0x581de2(0x177),()=>_0x382017[_0x581de2(0x178)]['remove'](_0x581de2(0x15e)),{'once':!![]}));}function toggleCmt(_0xea36b0){const _0x5004b1=_0x4b0a17,_0xd434c7=$(_0x5004b1(0x113)+_0xea36b0);if(!_0xd434c7)return;openedCmts[_0x5004b1(0x13b)](_0xea36b0)?(openedCmts[_0x5004b1(0x1ad)](_0xea36b0),_0xd434c7['classList']['remove']('open')):(openedCmts[_0x5004b1(0x18a)](_0xea36b0),_0xd434c7[_0x5004b1(0x178)]['add'](_0x5004b1(0x144)),setTimeout(()=>{const _0xf6d096=_0x5004b1,_0x187a4d=$(_0xf6d096(0x120)+_0xea36b0);if(_0x187a4d)_0x187a4d['focus']();},0x78));}function addCmt(_0x45bd0f){const _0x313532=_0x4b0a17;if(isBanned(myUID)){const _0x43accd=bans[safeKey(myUID)];toast(_0x313532(0x12d)+(_0x43accd?.[_0x313532(0x13c)]||'정책\x20위반'));return;}const _0x36ee1f=$(_0x313532(0x120)+_0x45bd0f),_0x35c209=_0x36ee1f?.[_0x313532(0x11b)]?.['trim']();if(!_0x35c209)return;const _0x574a98=db['ref'](_0x313532(0x1c1)+_0x45bd0f+_0x313532(0x153))[_0x313532(0x1ab)]();_0x574a98['set']({'id':_0x574a98[_0x313532(0x17c)],'author':myUID,'text':_0x35c209,'ts':Date[_0x313532(0x1cb)]()}),_0x36ee1f[_0x313532(0x11b)]='',_0x36ee1f[_0x313532(0x1d0)]();}function submitPost(){const _0x5e2dd3=_0x4b0a17;if(isBanned(myUID)){const _0x54e281=bans[safeKey(myUID)],_0x39b00b=_0x54e281?.[_0x5e2dd3(0x10d)]===0x0,_0x80e50e=_0x39b00b?'영구\x20정지':Math['max'](0x0,Math[_0x5e2dd3(0x1d2)]((_0x54e281[_0x5e2dd3(0x11a)]-Date['now']())/0x5265c00))+_0x5e2dd3(0x171);toast(_0x5e2dd3(0x19b)+_0x80e50e+_0x5e2dd3(0x184)+(_0x54e281?.[_0x5e2dd3(0x13c)]||_0x5e2dd3(0x11e)));return;}const _0x54b9b4=$(_0x5e2dd3(0x133))[_0x5e2dd3(0x11b)][_0x5e2dd3(0x1af)](),_0x11fb97=$(_0x5e2dd3(0x13f))['value'][_0x5e2dd3(0x1af)]();if(!_0x54b9b4){$(_0x5e2dd3(0x133))[_0x5e2dd3(0x1d0)](),toast(_0x5e2dd3(0x18d));return;}const _0x4d27a9=$(_0x5e2dd3(0x14e));_0x4d27a9['disabled']=!![];const _0x1660f1=postsRef[_0x5e2dd3(0x1ab)]();_0x1660f1['set']({'id':_0x1660f1[_0x5e2dd3(0x17c)],'cat':composeCat,'title':_0x54b9b4,'content':_0x11fb97,'author':myUID,'ts':Date[_0x5e2dd3(0x1cb)](),'likes':null,'comments':null})[_0x5e2dd3(0x1a3)](()=>{const _0x6bc20=_0x5e2dd3;$('newTitle')[_0x6bc20(0x11b)]='',$('newBody')['value']='',_0x4d27a9[_0x6bc20(0x1bc)]=![],toast(_0x6bc20(0x167)),window[_0x6bc20(0x12b)]({'top':0x0,'behavior':_0x6bc20(0x146)});})[_0x5e2dd3(0x1b3)](()=>{const _0x1a093d=_0x5e2dd3;_0x4d27a9[_0x1a093d(0x1bc)]=![],toast(_0x1a093d(0x15f));});}function openMyInfo(){const _0x174776=_0x4b0a17;$(_0x174776(0x181))[_0x174776(0x1d1)]=myUID,updateStats(),renderInfoList();const _0x7abf13=$(_0x174776(0x149));_0x7abf13[_0x174776(0x178)][_0x174776(0x198)](_0x174776(0x1b4)),_0x7abf13[_0x174776(0x178)][_0x174776(0x18a)](_0x174776(0x150));}function _0x1d20(){const _0xe4e2fd=[')\x20—\x20사유:\x20','author','10xzxNUi','3637168IsfLQl','show','\x0a\x20\x20\x20\x20<div\x20class=\x22px-4\x20py-2.5\x20border-b\x20border-black/[.04]\x20last:border-0\x22>\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22flex\x20items-center\x20gap-2\x20mb-1\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22text-[12px]\x20font-semibold\x20text-[#1d1d1f]\x22>','add','database','</p>\x0a\x20\x20\x20\x20</div>','제목을\x20입력해주세요','max','</span>\x0a\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20<button\x20onclick=\x22toggleCmt(\x27','/likes/','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20','setAttribute','59970RNHYKl','orderByChild','2XHHbFc','#c0c0c8','replace','remove','72suPDtO','서비스\x20이용약관','활동\x20정지\x20상태입니다\x20(','getItem','&quot;','stopPropagation','className','set','ccat\x20sel','267827CIhHNq','then','scrollIntoView','getElementById','도배·스팸','active','sc_consent','.report-chip.sel','initializeApp','push','수줍은','delete','카피바라','trim','신고\x20접수\x20실패.\x20다시\x20시도해주세요.','emptyState','title','catch','hidden','content','욕설·비방','tab','\x22\x20type=\x22text\x22\x20placeholder=\x22댓글\x20달기...\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20class=\x22flex-1\x20bg-gray-50\x20border\x20border-black/[.08]\x20rounded-[10px]\x20px-3\x20py-[7px]\x20text-[13px]\x20text-[#1d1d1f]\x20placeholder-gray-300\x20outline-none\x20focus:border-black/20\x20focus:bg-white\x20transition-all\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20onkeydown=\x22if(event.key===\x27Enter\x27)addCmt(\x27','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22text-[11px]\x20text-gray-300\x22>','map','slice','disabled','statPosts','허위사실\x20유포','3834424USbeou','innerHTML','posts/','liked','</p>\x0a\x20\x20\x20\x20\x20\x20','\x0a\x20\x20<div\x20class=\x22post-card\x22\x20id=\x22post_','#e0334c','querySelectorAll','\x27,\x27','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22text-[12px]\x20text-[#6e6e73]\x22>','cat','offsetWidth','now','<div\x20class=\x22policy-body\x22>\x0a<p\x20class=\x22date\x22>시행일:\x202026년\x203월\x2014일</p>\x0a<h3>1.\x20수집하는\x20정보</h3>\x0a<p>본\x20서비스는\x20회원가입\x20없이\x20이용\x20가능하며,\x20별도의\x20개인\x20식별\x20정보를\x20수집하지\x20않습니다.\x20다만\x20서비스\x20이용\x20시\x20아래\x20정보가\x20자동\x20생성\x20및\x20저장됩니다.</p>\x0a<ul>\x0a\x20\x20<li>기기\x20내\x20로컬\x20저장소에\x20생성되는\x20익명\x20고유\x20식별\x20ID\x20(UID)</li>\x0a\x20\x20<li>작성한\x20게시글\x20및\x20댓글의\x20내용,\x20작성\x20시각</li>\x0a\x20\x20<li>좋아요\x20활동\x20기록</li>\x0a</ul>\x0a<h3>2.\x20정보의\x20이용\x20목적</h3>\x0a<ul>\x0a\x20\x20<li>커뮤니티\x20서비스\x20제공\x20및\x20운영</li>\x0a\x20\x20<li>부적절한\x20게시물\x20제재\x20및\x20운영\x20정책\x20위반\x20방지</li>\x0a\x20\x20<li>수사기관\x20공조\x20요청\x20대응\x20(법령에\x20근거한\x20경우에\x20한함)</li>\x0a</ul>\x0a<h3>3.\x20정보의\x20보관\x20및\x20파기</h3>\x0a<p>게시글\x20및\x20댓글\x20데이터는\x20서비스\x20운영\x20기간\x20동안\x20보관되며,\x20운영자가\x20삭제하거나\x20서비스\x20종료\x20시\x20파기됩니다.</p>\x0a<h3>4.\x20제3자\x20제공</h3>\x0a<p>수집된\x20정보는\x20원칙적으로\x20제3자에게\x20제공되지\x20않습니다.\x20단,\x20관련\x20법령에\x20의거하여\x20수사기관\x20등이\x20요청하는\x20경우\x20고유\x20식별\x20ID를\x20포함한\x20최소한의\x20정보가\x20제공될\x20수\x20있습니다.</p>\x0a<h3>5.\x20문의</h3>\x0a<p>개인정보\x20처리에\x20관한\x20문의는\x20커뮤니티\x20관리자에게\x20문의해\x20주세요.</p>\x0a</div>','toString','.info-tab','min','focus','textContent','ceil','join','재빠른','활발한','school-community-bd1d4.firebaseapp.com','forEach','1796772bedMpQ','\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20<p\x20class=\x22text-[13px]\x20text-[#1d1d1f]\x20leading-relaxed\x22>','.cat-pill[data-cat=\x22전체\x22]','sc_rpt_','pending','268633783083','entries','duration','&lt;','commented','written','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22text-[11px]\x20text-gray-300\x20ml-auto\x22>','&amp;','cw_','loadingState','text','ref','center','dataset','미어캣','until','value','기타:\x20','\x20open','정책\x20위반','.ccat','ci_','시간\x20전','val','\x22\x20width=\x2216\x22\x20height=\x2216\x22\x20viewBox=\x220\x200\x2024\x2024\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20fill=\x22','sort','setItem','이미\x20신고한\x20게시물입니다.','reports','posts','<p\x20class=\x22text-[11px]\x20text-gray-400\x20mt-1\x20truncate\x22>💬\x20','185aXQpKR','scrollTo','none','활동\x20정지\x20상태입니다.\x20사유:\x20','\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<svg\x20id=\x22hsvg_','post','school-community-bd1d4.firebasestorage.app','likes','\x27)\x22>\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22flex\x20items-center\x20gap-2\x20mb-1\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22tag\x20tag-','newTitle','귀여운','charCodeAt','feed','length','color','ccat','\x0a\x20\x20\x20\x20</div>','has','reason','policyModal','\x22\x20onclick=\x22toggleLike(event,\x27','newBody','<button\x20onclick=\x22openReport(event,\x27post\x27,\x27','\x27)\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20class=\x22flex-shrink-0\x20bg-[#1d1d1f]\x20text-white\x20text-[12px]\x20font-medium\x20px-3\x20py-[7px]\x20rounded-[9px]\x20hover:opacity-80\x20active:scale-95\x20transition-all\x22>전송</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20</div>\x0a\x20\x20</div>','some','stroke','open','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22ml-auto\x20text-[11px]\x20text-gray-300\x20flex-shrink-0\x22>','smooth','</p>','https://school-community-bd1d4-default-rtdb.asia-southeast1.firebasedatabase.app','infoModal','sc_uid','\x27)\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20class=\x22flex\x20items-center\x20gap-1.5\x20text-[13px]\x20font-medium\x20transition-colors\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20style=\x22color:','독수리','post_','submitBtn','values','flex','\x22>\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22border-t\x20border-black/[.05]\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20id=\x22clist_','comments','/comments','\x27)\x22\x20class=\x22ml-auto\x20text-[11px]\x20text-[#d8d8e0]\x20hover:text-[#e0334c]\x20transition-colors\x22>신고</button>','음란·불법\x20콘텐츠','.cat-pill','3YEHoXr','고양이','용감한','addEventListener','style','consentPopup','scrollTop','like-pop','등록\x20실패.\x20다시\x20시도해주세요.','영리한','.report-chip','분\x20전','<div\x20class=\x22policy-body\x22>\x0a<h3><span\x20class=\x22tossface\x22>🤝</span>\x20함께\x20만드는\x20커뮤니티</h3>\x0a<p>호남제일고\x20대나무숲는\x20구성원\x20모두가\x20편하게\x20소통할\x20수\x20있는\x20공간입니다.\x20아래\x20가이드를\x20지켜\x20주세요.</p>\x0a<h3><span\x20class=\x22tossface\x22>✅</span>\x20이런\x20글을\x20써주세요</h3>\x0a<ul>\x0a\x20\x20<li>학교생활,\x20급식,\x20수업에\x20관한\x20가벼운\x20이야기</li>\x0a\x20\x20<li>시험,\x20수행평가\x20관련\x20정보\x20공유</li>\x0a\x20\x20<li>학교\x20행사,\x20동아리,\x20방과후\x20관련\x20정보</li>\x0a\x20\x20<li>익명으로\x20털어놓고\x20싶은\x20솔직한\x20고민</li>\x0a</ul>\x0a<h3><span\x20class=\x22tossface\x22>🚫</span>\x20이런\x20글은\x20안\x20돼요</h3>\x0a<ul>\x0a\x20\x20<li>특정\x20학생·교사에\x20대한\x20비방·욕설·인신공격</li>\x0a\x20\x20<li>확인되지\x20않은\x20루머나\x20허위\x20정보\x20유포</li>\x0a\x20\x20<li>타인의\x20개인정보(이름,\x20연락처,\x20사진\x20등)\x20무단\x20게시</li>\x0a\x20\x20<li>도배,\x20광고,\x20의미\x20없는\x20반복\x20게시물</li>\x0a\x20\x20<li>선정적·폭력적\x20내용</li>\x0a</ul>\x0a<h3><span\x20class=\x22tossface\x22>⚠️</span>\x20제재\x20안내</h3>\x0a<p>가이드\x20위반\x20게시물은\x20예고\x20없이\x20삭제될\x20수\x20있으며,\x20반복\x20위반\x20시\x20활동이\x20정지됩니다.\x20심각한\x20위반은\x20학교\x20및\x20수사기관에\x20협조할\x20수\x20있습니다.</p>\x0a<h3><span\x20class=\x22tossface\x22>💬</span>\x20건강한\x20댓글\x20문화</h3>\x0a<ul>\x0a\x20\x20<li>반대\x20의견도\x20존중하는\x20태도로\x20표현해\x20주세요.</li>\x0a\x20\x20<li>감정적인\x20표현보다\x20사실\x20중심으로\x20써주세요.</li>\x0a\x20\x20<li>불쾌한\x20게시물은\x20신고보다\x20무시하는\x20것도\x20방법입니다.</li>\x0a</ul>\x0a</div>','252009cTBiyC','\x0a\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20<div\x20id=\x22cw_','\x27)\x22/>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20onclick=\x22addCmt(\x27','게시글이\x20등록됐어요\x20🎉','\x22\x20stroke-width=\x222\x22\x20stroke-linecap=\x22round\x22\x20stroke-linejoin=\x22round\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<path\x20d=\x22M20.84\x204.61a5.5\x205.5\x200\x200\x200-7.78\x200L12\x205.67l-1.06-1.06a5.5\x205.5\x200\x200\x200-7.78\x207.78l1.06\x201.06L12\x2021.23l7.78-7.78\x201.06-1.06a5.5\x205.5\x200\x200\x200\x200-7.78z\x22/>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</svg>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<span\x20id=\x22lcnt_','filter','fill','2280250XDieEp','lcnt_','\x22\x20stroke=\x22','sel','reportModal','\x22\x20class=\x22cmt-wrap','일\x20남음','find','조용한','reportOtherWrap','querySelector','keys','animationend','classList','likeBtn_','\x22>\x0a\x20\x20\x20\x20<div\x20class=\x22px-4\x20pt-4\x20pb-3\x20cursor-pointer\x20select-none\x22\x20onclick=\x22toggleCmt(\x27','hl-pulse','key','개인정보\x20노출','<div\x20class=\x22text-center\x20py-8\x20text-[13px]\x20text-gray-300\x22>아직\x20없어요</div>','다람쥐','\x20<span\x20class=\x22text-[10px]\x20font-semibold\x20text-blue-400\x22>나</span>','uidDisplay','reportOtherText','\x27)\x22\x0a\x20\x20\x20\x20\x20\x20\x20\x20class=\x22flex\x20items-center\x20gap-1.5\x20text-[13px]\x20font-medium\x20text-[#c0c0c8]\x20hover:text-[#6e6e73]\x20transition-colors\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<svg\x20width=\x2215\x22\x20height=\x2215\x22\x20viewBox=\x220\x200\x2024\x2024\x22\x20fill=\x22none\x22\x20stroke=\x22currentColor\x22\x20stroke-width=\x222\x22\x20stroke-linecap=\x22round\x22\x20stroke-linejoin=\x22round\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<path\x20d=\x22M21\x2015a2\x202\x200\x200\x201-2\x202H7l-4\x204V5a2\x202\x200\x200\x201\x202-2h14a2\x202\x200\x200\x201\x202\x202z\x22/>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</svg>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<span\x20id=\x22ccnt_'];_0x1d20=function(){return _0xe4e2fd;};return _0x1d20();}function closeMyInfo(){const _0x5b21fd=_0x4b0a17,_0x22f7a7=$(_0x5b21fd(0x149));_0x22f7a7[_0x5b21fd(0x178)][_0x5b21fd(0x18a)](_0x5b21fd(0x1b4)),_0x22f7a7[_0x5b21fd(0x178)]['remove']('flex');}function updateStats(){const _0x510f2c=_0x4b0a17,_0x364d73=Object['values'](posts);$(_0x510f2c(0x1bd))[_0x510f2c(0x1d1)]=_0x364d73[_0x510f2c(0x169)](_0x179737=>_0x179737[_0x510f2c(0x185)]===myUID)[_0x510f2c(0x137)],$('statLikes')[_0x510f2c(0x1d1)]=_0x364d73[_0x510f2c(0x169)](_0x5700f2=>_0x5700f2[_0x510f2c(0x131)]&&_0x5700f2['likes'][myUID])['length'],$('statComments')['textContent']=_0x364d73['filter'](_0x182cba=>_0x182cba['comments']&&Object[_0x510f2c(0x14f)](_0x182cba[_0x510f2c(0x152)])[_0x510f2c(0x142)](_0x16a51f=>_0x16a51f[_0x510f2c(0x185)]===myUID))[_0x510f2c(0x137)];}function setInfoTab(_0x3706c9){const _0x3bab82=_0x4b0a17;document[_0x3bab82(0x1c6)](_0x3bab82(0x1ce))[_0x3bab82(0x105)](_0x4185b4=>_0x4185b4[_0x3bab82(0x178)][_0x3bab82(0x198)](_0x3bab82(0x1a7))),_0x3706c9['classList'][_0x3bab82(0x18a)]('active'),currentInfoTab=_0x3706c9['dataset'][_0x3bab82(0x1b7)],renderInfoList();}function renderInfoList(){const _0x47475b=_0x4b0a17,_0xdd818d=$('infoList'),_0x4c241c=Object[_0x47475b(0x14f)](posts);let _0x59553c=[];if(currentInfoTab===_0x47475b(0x110))_0x59553c=_0x4c241c['filter'](_0x3c0f34=>_0x3c0f34['author']===myUID);else{if(currentInfoTab===_0x47475b(0x1c2))_0x59553c=_0x4c241c['filter'](_0x2a4cdc=>_0x2a4cdc[_0x47475b(0x131)]&&_0x2a4cdc[_0x47475b(0x131)][myUID]);else _0x59553c=_0x4c241c[_0x47475b(0x169)](_0x4dd2f8=>_0x4dd2f8[_0x47475b(0x152)]&&Object['values'](_0x4dd2f8[_0x47475b(0x152)])[_0x47475b(0x142)](_0x260d44=>_0x260d44[_0x47475b(0x185)]===myUID));}if(!_0x59553c[_0x47475b(0x137)]){_0xdd818d[_0x47475b(0x1c0)]=_0x47475b(0x17e);return;}_0xdd818d[_0x47475b(0x1c0)]=_0x59553c['map'](_0x517b04=>{const _0x555055=_0x47475b,_0x21a5b6=_0x517b04[_0x555055(0x152)]?Object[_0x555055(0x14f)](_0x517b04[_0x555055(0x152)])['filter'](_0x1ebbab=>_0x1ebbab[_0x555055(0x185)]===myUID):[];return'\x0a\x20\x20\x20\x20<div\x20class=\x22bg-gray-50\x20border\x20border-black/[.06]\x20rounded-[12px]\x20px-3.5\x20py-3\x20cursor-pointer\x20hover:bg-white\x20transition-all\x20active:scale-[.98]\x22\x0a\x20\x20\x20\x20\x20\x20onclick=\x22jumpToPost(\x27'+_0x517b04['id']+_0x555055(0x132)+_0x517b04[_0x555055(0x1c9)]+'\x22>'+_0x517b04[_0x555055(0x1c9)]+_0x555055(0x111)+relTime(_0x517b04['ts'])+'</span>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20<p\x20class=\x22text-[13px]\x20font-medium\x20text-[#1d1d1f]\x20leading-snug\x22>'+esc(_0x517b04['title'])+_0x555055(0x1c3)+(currentInfoTab===_0x555055(0x10f)&&_0x21a5b6[_0x555055(0x137)]?_0x555055(0x129)+_0x21a5b6[_0x555055(0x1ba)](_0x830959=>esc(_0x830959[_0x555055(0x115)]))[_0x555055(0x1d3)]('\x20·\x20')+'</p>':'')+_0x555055(0x13a);})['join']('');}function jumpToPost(_0x547d8d){const _0x59efc8=_0x4b0a17;currentCat!=='전체'&&posts[_0x547d8d]&&posts[_0x547d8d][_0x59efc8(0x1c9)]!==currentCat&&setFilter(document[_0x59efc8(0x175)](_0x59efc8(0x108))),closeMyInfo(),setTimeout(()=>{const _0x1cfa35=_0x59efc8,_0x20f11e=document[_0x1cfa35(0x1a5)](_0x1cfa35(0x14d)+_0x547d8d);if(_0x20f11e){_0x20f11e[_0x1cfa35(0x1a4)]({'behavior':'smooth','block':_0x1cfa35(0x117)}),_0x20f11e[_0x1cfa35(0x178)][_0x1cfa35(0x18a)](_0x1cfa35(0x17b)),_0x20f11e[_0x1cfa35(0x15a)](_0x1cfa35(0x177),()=>_0x20f11e[_0x1cfa35(0x178)]['remove']('hl-pulse'),{'once':!![]});if(!openedCmts[_0x1cfa35(0x13b)](_0x547d8d)){openedCmts[_0x1cfa35(0x18a)](_0x547d8d);const _0x4845f8=$('cw_'+_0x547d8d);if(_0x4845f8)_0x4845f8[_0x1cfa35(0x178)]['add'](_0x1cfa35(0x144));}}},0x96);}setInterval(renderFeed,0xea60);const reportsRef=db[_0x4b0a17(0x116)](_0x4b0a17(0x127)),REPORT_REASONS=[_0x4b0a17(0x1b6),_0x4b0a17(0x1be),_0x4b0a17(0x17d),_0x4b0a17(0x1a6),_0x4b0a17(0x155),'기타'];let reportTarget=null;function openReport(_0x1f79ed,_0x4618ef,_0x1d1add,_0x1529c5){const _0x28ef79=_0x4b0a17;_0x1f79ed[_0x28ef79(0x19e)]();const _0x502a1f=myUID+'_'+_0x4618ef+'_'+_0x1529c5;try{if(localStorage['getItem'](_0x28ef79(0x109)+_0x502a1f)){toast(_0x28ef79(0x126));return;}}catch(_0xc70a64){}reportTarget={'type':_0x4618ef,'postId':_0x1d1add,'targetId':_0x1529c5,'key':_0x502a1f},document[_0x28ef79(0x1c6)](_0x28ef79(0x161))[_0x28ef79(0x105)](_0x184796=>_0x184796['classList'][_0x28ef79(0x198)](_0x28ef79(0x16e))),document[_0x28ef79(0x1a5)](_0x28ef79(0x174))['classList'][_0x28ef79(0x18a)](_0x28ef79(0x1b4)),document[_0x28ef79(0x1a5)]('reportOtherText')[_0x28ef79(0x11b)]='';const _0x1d00d5=document[_0x28ef79(0x1a5)](_0x28ef79(0x16f));_0x1d00d5[_0x28ef79(0x178)][_0x28ef79(0x198)]('hidden'),_0x1d00d5['classList'][_0x28ef79(0x18a)](_0x28ef79(0x150));}function closeReport(){const _0x2e891f=_0x4b0a17,_0x46935a=document[_0x2e891f(0x1a5)](_0x2e891f(0x16f));_0x46935a[_0x2e891f(0x178)][_0x2e891f(0x18a)](_0x2e891f(0x1b4)),_0x46935a[_0x2e891f(0x178)][_0x2e891f(0x198)](_0x2e891f(0x150)),reportTarget=null;}function pickReportReason(_0x8f0423,_0x231623){const _0x306dc5=_0x4b0a17;document[_0x306dc5(0x1c6)]('.report-chip')[_0x306dc5(0x105)](_0x5cd434=>_0x5cd434['classList']['remove']('sel')),_0x8f0423[_0x306dc5(0x178)][_0x306dc5(0x18a)](_0x306dc5(0x16e));const _0x7c146b=document[_0x306dc5(0x1a5)](_0x306dc5(0x174));if(_0x231623==='기타')_0x7c146b['classList'][_0x306dc5(0x198)](_0x306dc5(0x1b4)),setTimeout(()=>document[_0x306dc5(0x1a5)](_0x306dc5(0x182))['focus'](),0x3c);else _0x7c146b[_0x306dc5(0x178)]['add'](_0x306dc5(0x1b4));}function submitReport(){const _0x36d058=_0x4b0a17,_0x26326d=document['querySelector'](_0x36d058(0x1a9));if(!_0x26326d){toast('신고\x20사유를\x20선택해주세요.');return;}let _0x52ef70=_0x26326d[_0x36d058(0x118)]['r'];if(_0x52ef70==='기타'){const _0x26dd1f=document['getElementById'](_0x36d058(0x182))[_0x36d058(0x11b)][_0x36d058(0x1af)]();if(!_0x26dd1f){document[_0x36d058(0x1a5)](_0x36d058(0x182))[_0x36d058(0x1d0)]();return;}_0x52ef70=_0x36d058(0x11c)+_0x26dd1f;}const {type:_0x1c7072,postId:_0xc2ac24,targetId:_0x50c6c8,key:_0x411229}=reportTarget,_0x31fb98=posts[_0xc2ac24],_0x5e5bd5={'type':_0x1c7072,'postId':_0xc2ac24,'targetId':_0x50c6c8,'reason':_0x52ef70,'reporterUID':myUID,'ts':Date[_0x36d058(0x1cb)](),'status':_0x36d058(0x10a),'postTitle':_0x31fb98?_0x31fb98[_0x36d058(0x1b2)]:'','postCat':_0x31fb98?_0x31fb98[_0x36d058(0x1c9)]:'','targetAuthor':_0x1c7072===_0x36d058(0x12f)?_0x31fb98?_0x31fb98[_0x36d058(0x185)]:'':((()=>{const _0x191914=_0x36d058;if(!_0x31fb98||!_0x31fb98[_0x191914(0x152)])return'';const _0xcb88f=Object[_0x191914(0x14f)](_0x31fb98[_0x191914(0x152)])[_0x191914(0x172)](_0x1e19ba=>_0x1e19ba['id']===_0x50c6c8);return _0xcb88f?_0xcb88f[_0x191914(0x185)]:'';})()),'targetContent':_0x1c7072===_0x36d058(0x12f)?_0x31fb98?_0x31fb98[_0x36d058(0x1b2)]+(_0x31fb98[_0x36d058(0x1b5)]?'\x20—\x20'+_0x31fb98[_0x36d058(0x1b5)]:''):'':((()=>{const _0x3a7d5b=_0x36d058;if(!_0x31fb98||!_0x31fb98[_0x3a7d5b(0x152)])return'';const _0x3ad3fa=Object[_0x3a7d5b(0x14f)](_0x31fb98[_0x3a7d5b(0x152)])[_0x3a7d5b(0x172)](_0xd8ab67=>_0xd8ab67['id']===_0x50c6c8);return _0x3ad3fa?_0x3ad3fa[_0x3a7d5b(0x115)]:'';})())};reportsRef[_0x36d058(0x1ab)](_0x5e5bd5)[_0x36d058(0x1a3)](()=>{const _0x918ab3=_0x36d058;try{localStorage[_0x918ab3(0x125)]('sc_rpt_'+_0x411229,'1');}catch(_0x27b497){}closeReport(),toast('신고가\x20접수됐습니다.\x20검토\x20후\x20조치하겠습니다.');})[_0x36d058(0x1b3)](()=>toast(_0x36d058(0x1b0)));}function initConsent(){const _0x98ecdb=_0x4b0a17;if(localStorage[_0x98ecdb(0x19c)](_0x98ecdb(0x1a8))==='1')return;const _0x1237c2=document[_0x98ecdb(0x1a5)](_0x98ecdb(0x15c));_0x1237c2['classList'][_0x98ecdb(0x198)](_0x98ecdb(0x1b4));}function acceptConsent(){const _0x4f2116=_0x4b0a17;try{localStorage[_0x4f2116(0x125)](_0x4f2116(0x1a8),'1');}catch(_0x3a44ea){}const _0x2547df=document['getElementById'](_0x4f2116(0x15c));_0x2547df['style']['animation']='consentUp\x20.28s\x20cubic-bezier(.4,0,.2,1)\x20reverse\x20both',setTimeout(()=>_0x2547df[_0x4f2116(0x178)][_0x4f2116(0x18a)](_0x4f2116(0x1b4)),0x118);}function openPolicy(_0x4ce442){const _0x1cadf5=_0x4b0a17,_0x394ead={'privacy':'개인정보처리방침','terms':_0x1cadf5(0x19a),'guide':'커뮤니티\x20이용가이드'},_0x3dfbf3={'privacy':getPolicyPrivacy(),'terms':getPolicyTerms(),'guide':getPolicyGuide()};document[_0x1cadf5(0x1a5)]('policyTitle')[_0x1cadf5(0x1d1)]=_0x394ead[_0x4ce442],document['getElementById']('policyBody')[_0x1cadf5(0x1c0)]=_0x3dfbf3[_0x4ce442];const _0x1f05b1=document[_0x1cadf5(0x1a5)](_0x1cadf5(0x13d));_0x1f05b1[_0x1cadf5(0x178)][_0x1cadf5(0x198)](_0x1cadf5(0x1b4)),_0x1f05b1[_0x1cadf5(0x178)][_0x1cadf5(0x18a)](_0x1cadf5(0x150)),document[_0x1cadf5(0x1a5)]('policyBody')[_0x1cadf5(0x15d)]=0x0;}function closePolicy(){const _0x37956d=_0x4b0a17,_0x2aa27d=document[_0x37956d(0x1a5)](_0x37956d(0x13d));_0x2aa27d[_0x37956d(0x178)]['add'](_0x37956d(0x1b4)),_0x2aa27d['classList'][_0x37956d(0x198)](_0x37956d(0x150));}function getPolicyPrivacy(){const _0x39b07e=_0x4b0a17;return _0x39b07e(0x1cc);}function getPolicyTerms(){return'<div\x20class=\x22policy-body\x22>\x0a<p\x20class=\x22date\x22>시행일:\x202026년\x203월\x2014일</p>\x0a<h3>제1조\x20(목적)</h3>\x0a<p>본\x20약관은\x20호남제일고\x20대나무숲(이하\x20\x22서비스\x22)의\x20이용\x20조건\x20및\x20절차,\x20운영자와\x20이용자의\x20권리·의무\x20및\x20책임\x20사항을\x20규정함을\x20목적으로\x20합니다.</p>\x0a<h3>제2조\x20(서비스\x20이용)</h3>\x0a<ul>\x0a\x20\x20<li>서비스는\x20별도의\x20회원가입\x20없이\x20누구나\x20이용할\x20수\x20있습니다.</li>\x0a\x20\x20<li>서비스에\x20접속하는\x20순간\x20본\x20약관에\x20동의한\x20것으로\x20간주됩니다.</li>\x0a</ul>\x0a<h3>제3조\x20(금지\x20행위)</h3>\x0a<p>이용자는\x20다음\x20행위를\x20해서는\x20안\x20됩니다.</p>\x0a<ul>\x0a\x20\x20<li>타인에\x20대한\x20욕설,\x20비방,\x20명예훼손</li>\x0a\x20\x20<li>허위사실\x20유포\x20및\x20거짓\x20정보\x20게시</li>\x0a\x20\x20<li>개인정보\x20무단\x20수집\x20또는\x20유포</li>\x0a\x20\x20<li>도배,\x20광고,\x20스팸\x20게시물\x20작성</li>\x0a\x20\x20<li>음란물\x20및\x20불법\x20콘텐츠\x20게시</li>\x0a\x20\x20<li>서비스\x20운영을\x20방해하는\x20모든\x20행위</li>\x0a</ul>\x0a<h3>제4조\x20(제재\x20및\x20책임)</h3>\x0a<p>금지\x20행위\x20적발\x20시\x20운영자는\x20경고\x20없이\x20해당\x20게시물\x20삭제\x20및\x20활동\x20정지\x20조치를\x20취할\x20수\x20있습니다.\x20위법\x20행위에\x20대해서는\x20관계\x20법령에\x20따라\x20수사기관에\x20협조합니다.</p>\x0a<h3>제5조\x20(면책)</h3>\x0a<p>서비스\x20내\x20이용자가\x20작성한\x20게시물의\x20내용에\x20대한\x20책임은\x20작성자\x20본인에게\x20있으며,\x20운영자는\x20이로\x20인한\x20분쟁에\x20대해\x20책임을\x20지지\x20않습니다.</p>\x0a<h3>제6조\x20(약관\x20변경)</h3>\x0a<p>운영자는\x20필요\x20시\x20약관을\x20변경할\x20수\x20있으며,\x20변경\x20시\x20서비스\x20내\x20공지를\x20통해\x20안내합니다.</p>\x0a</div>';}function getPolicyGuide(){const _0x32a906=_0x4b0a17;return _0x32a906(0x163);}initConsent();
+</script>
+
+<!-- ── FOOTER ── -->
+<footer style="background:#fff;border-top:0.5px solid rgba(0,0,0,0.07);" class="mt-8">
+  <div class="max-w-2xl mx-auto px-5 py-8">
+    <!-- Logo row -->
+    <div class="flex items-center gap-2 mb-4">
+      <span class="text-[13px] font-semibold text-[#1d1d1f]">호남제일고 대나무숲 🫥</span>
+    </div>
+    <!-- Policy links -->
+    <div class="flex flex-wrap gap-x-5 gap-y-2 mb-5">
+      <button onclick="openPolicy('privacy')" class="text-[12px] font-medium text-[#1d1d1f] hover:underline underline-offset-2 transition-all">개인정보처리방침</button>
+      <button onclick="openPolicy('terms')" class="text-[12px] text-[#6e6e73] hover:text-[#1d1d1f] hover:underline underline-offset-2 transition-all">서비스 이용약관</button>
+      <button onclick="openPolicy('guide')" class="text-[12px] text-[#6e6e73] hover:text-[#1d1d1f] hover:underline underline-offset-2 transition-all">커뮤니티 이용가이드</button>
+    </div>
+    <!-- Notice -->
+    <p class="text-[11px] text-[#9ca3af] leading-relaxed mb-2">
+      본 서비스를 이용하면 개인정보처리방침 및 서비스 이용약관에 동의한 것으로 간주됩니다.<br/>
+      게시물의 법적 책임은 작성자 본인에게 있으며, 부적절한 게시물은 예고 없이 삭제될 수 있습니다.
+    </p>
+    <p class="text-[11px] text-[#c0c0c8]">© 2026 호남제일고 대나무숲 🫥. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- ── REPORT MODAL ── -->
+<div id="reportModal" class="fixed inset-0 z-[450] hidden items-end sm:items-center justify-center p-0 sm:p-4"
+     style="background:rgba(0,0,0,0.45);backdrop-filter:blur(6px);" onclick="if(event.target===this)closeReport()">
+  <div class="report-modal bg-white w-full sm:max-w-sm rounded-t-[24px] sm:rounded-[24px] shadow-2xl overflow-hidden">
+    <div class="flex items-center justify-between px-5 py-4 border-b border-black/[.06]">
+      <p class="text-[16px] font-semibold text-[#1d1d1f]">신고하기</p>
+      <button onclick="closeReport()" class="text-gray-300 hover:text-gray-500 transition-colors p-1">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="px-5 pt-4 pb-2">
+      <p class="text-[12px] text-[#6e6e73] mb-3">신고 사유를 선택해주세요. 허위 신고는 제재를 받을 수 있습니다.</p>
+      <div class="flex flex-col gap-2" id="reportReasons">
+        <button class="report-chip" data-r="욕설·비방" onclick="pickReportReason(this,'욕설·비방')">
+          <span class="tossface mr-2 text-[18px]">🤬</span> 욕설·비방·혐오 표현
+        </button>
+        <button class="report-chip" data-r="허위사실 유포" onclick="pickReportReason(this,'허위사실 유포')">
+          <span class=" tossface mr-2 text-[18px]">🚫</span> 허위사실 유포
+        </button>
+        <button class="report-chip" data-r="개인정보 노출" onclick="pickReportReason(this,'개인정보 노출')">
+          <span class="tossface mr-2 text-[18px]">🔒</span> 개인정보 무단 노출
+        </button>
+        <button class="report-chip" data-r="도배·스팸" onclick="pickReportReason(this,'도배·스팸')">
+          <span class="tossface mr-2 text-[18px]">📢</span> 도배·스팸·광고
+        </button>
+        <button class="report-chip" data-r="음란·불법 콘텐츠" onclick="pickReportReason(this,'음란·불법 콘텐츠')">
+          <span class="tossface mr-2 text-[18px]">⚠️</span> 음란·불법 콘텐츠
+        </button>
+        <button class="report-chip" data-r="기타" onclick="pickReportReason(this,'기타')">
+          <span class="tossface mr-2 text-[18px]">✏️</span> 기타
+        </button>
+      </div>
+      <div id="reportOtherWrap" class="hidden mt-2">
+        <input id="reportOtherText" type="text" placeholder="신고 사유를 직접 입력하세요" maxlength="100"
+          class="w-full border border-black/[.08] rounded-[10px] px-3 py-2.5 text-[13px] text-[#1d1d1f] placeholder-gray-300 outline-none focus:border-black/20 transition-all"/>
+      </div>
+    </div>
+    <div class="px-5 pb-6 pt-3 flex gap-2">
+      <button onclick="closeReport()" class="flex-1 bg-gray-100 text-[#1d1d1f] text-[14px] font-medium py-3 rounded-[14px] hover:bg-gray-200 transition-all">취소</button>
+      <button onclick="submitReport()" class="flex-1 bg-[#e0334c] text-white text-[14px] font-medium py-3 rounded-[14px] hover:opacity-85 active:scale-[.98] transition-all">신고 제출</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── CONSENT POPUP ── -->
+<div id="consentPopup" class="fixed bottom-0 left-0 right-0 z-[400] hidden">
+  <div class="max-w-2xl mx-auto px-4 pb-4">
+    <div class="bg-[#1d1d1f] rounded-[20px] px-5 py-4 shadow-2xl">
+      <div class="flex items-start gap-3">
+        <div class="flex-shrink-0 mt-0.5">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-[13px] font-semibold text-white mb-1">서비스 이용 안내</p>
+          <p class="text-[12px] text-[#9ca3af] leading-relaxed mb-3">
+            이 커뮤니티를 이용하면
+            <button onclick="openPolicy('privacy')" class="text-white underline underline-offset-2">개인정보처리방침</button>,
+            <button onclick="openPolicy('terms')" class="text-white underline underline-offset-2">이용약관</button>,
+            <button onclick="openPolicy('guide')" class="text-white underline underline-offset-2">이용가이드</button>에
+            동의한 것으로 간주됩니다. 욕설·비방·허위사실 게시물은 수사기관 협조 대상이 됩니다.
+          </p>
+          <button onclick="acceptConsent()"
+            class="w-full bg-white text-[#1d1d1f] text-[13px] font-semibold py-2.5 rounded-[12px] hover:bg-gray-100 active:scale-[.98] transition-all">
+            확인하고 계속하기
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── POLICY MODAL ── -->
+<div id="policyModal" class="fixed inset-0 z-[500] hidden items-end sm:items-center justify-center p-0 sm:p-4"
+     style="background:rgba(0,0,0,0.5);backdrop-filter:blur(6px);" onclick="if(event.target===this)closePolicy()">
+  <div class="policy-modal bg-white w-full sm:max-w-lg rounded-t-[24px] sm:rounded-[24px] shadow-2xl flex flex-col max-h-[88vh]">
+    <!-- Modal header -->
+    <div class="flex items-center justify-between px-5 py-4 border-b border-black/[.06] flex-shrink-0">
+      <p class="text-[16px] font-semibold text-[#1d1d1f]" id="policyTitle"></p>
+      <button onclick="closePolicy()" class="text-gray-300 hover:text-gray-500 transition-colors p-1">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <!-- Modal body -->
+    <div id="policyBody" class="px-5 py-5 overflow-y-auto flex-1"></div>
+    <!-- Modal footer -->
+    <div class="px-5 pb-6 pt-3 flex-shrink-0 border-t border-black/[.05]">
+      <button onclick="closePolicy()" class="w-full bg-[#1d1d1f] text-white text-[14px] font-medium py-3.5 rounded-[14px] hover:opacity-85 active:scale-[.98] transition-all">닫기</button>
+    </div>
+  </div>
+</div>
+<!-- ── FAB GROUP ── -->
+<div id="fabGroup">
+  <!-- Bug/Feedback button -->
+  <div class="fab-wrap">
+    <button class="fab fab-secondary" onclick="openFeedback()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+      제안하기
+    </button>
+  </div>
+  <!-- Scroll to top -->
+  <div class="fab-wrap">
+    <span class="fab-tip">맨 위로</span>
+    <button id="fabScrollTop" class="fab fab-main" onclick="scrollToTop()" aria-label="상단으로">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="18 15 12 9 6 15"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<!-- ── FEEDBACK MODAL ── -->
+<div id="feedbackModal" class="fixed inset-0 z-[460] hidden items-end sm:items-center justify-center p-0 sm:p-4"
+     style="background:rgba(0,0,0,0.44);backdrop-filter:blur(7px);" onclick="if(event.target===this)closeFeedback()">
+  <div class="fb-modal bg-white w-full sm:max-w-md rounded-t-[24px] sm:rounded-[24px] shadow-2xl overflow-hidden">
+    <!-- Header -->
+    <div class="flex items-center justify-between px-5 py-4 border-b border-black/[.06]">
+      <div>
+        <p class="text-[16px] font-semibold text-[#1d1d1f]">버그 제보 · 제안하기</p>
+        <p class="tossface text-[11px] text-gray-400 mt-0.5">소중한 의견을 남겨주세요 😊</p>
+      </div>
+      <button onclick="closeFeedback()" class="text-gray-300 hover:text-gray-500 transition-colors p-1">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div class="px-5 py-5 flex flex-col gap-4">
+      <!-- Type selector -->
+      <div>
+        <p class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-2">유형</p>
+        <div class="grid grid-cols-3 gap-2" id="fbTypeGroup">
+          <button class="tossface fb-type-btn py-2.5 rounded-[10px] text-[13px] font-medium border-[1.5px] border-black/10 text-[#6e6e73] bg-white transition-all hover:border-black/20 active:scale-[.97]"
+            data-t="bug" onclick="pickFbType(this)">🐛 버그 제보</button>
+          <button class="tossface fb-type-btn py-2.5 rounded-[10px] text-[13px] font-medium border-[1.5px] border-black/10 text-[#6e6e73] bg-white transition-all hover:border-black/20 active:scale-[.97]"
+            data-t="suggest" onclick="pickFbType(this)">💡 기능 제안</button>
+          <button class="tossface fb-type-btn py-2.5 rounded-[10px] text-[13px] font-medium border-[1.5px] border-black/10 text-[#6e6e73] bg-white transition-all hover:border-black/20 active:scale-[.97]"
+            data-t="etc" onclick="pickFbType(this)">💬 기타 의견</button>
+        </div>
+      </div>
+
+      <!-- Title -->
+      <div>
+        <p class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-1.5">제목</p>
+        <input id="fbTitle" type="text" maxlength="60" placeholder="한 줄로 요약해주세요"
+          class="w-full border border-black/[.08] rounded-[10px] px-3 py-2.5 text-[13px] text-[#1d1d1f] placeholder-gray-300 outline-none focus:border-black/20 transition-all"/>
+      </div>
+
+      <!-- Content -->
+      <div>
+        <p class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-1.5">내용</p>
+        <textarea id="fbContent" placeholder="자세히 적어주실수록 빠른 처리에 도움이 됩니다." rows="4"
+          class="w-full border border-black/[.08] rounded-[10px] px-3 py-2.5 text-[13px] text-[#1d1d1f] placeholder-gray-300 outline-none focus:border-black/20 transition-all resize-none leading-relaxed"></textarea>
+      </div>
+
+      <!-- UID notice -->
+      <div class="bg-gray-50 border border-black/[.06] rounded-[10px] px-3 py-2.5 flex gap-2 items-start">
+        <svg class="flex-shrink-0 mt-px" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <p class="text-[11px] text-gray-400 leading-relaxed">제보 시 고유 ID가 함께 전송되어 답변 및 추적에 활용될 수 있습니다.</p>
+      </div>
+    </div>
+
+    <div class="px-5 pb-6 flex gap-2">
+      <button onclick="closeFeedback()" class="flex-1 bg-gray-100 text-[#1d1d1f] text-[14px] font-medium py-3 rounded-[14px] hover:bg-gray-200 transition-all">취소</button>
+      <button onclick="submitFeedback()" class="flex-1 bg-[#1d1d1f] text-white text-[14px] font-medium py-3 rounded-[14px] hover:opacity-85 active:scale-[.98] transition-all">제출하기</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const _0xc7f6d2=_0x2419;function _0x2419(_0x23f711,_0x29852f){_0x23f711=_0x23f711-0x152;const _0x55c4c3=_0x55c4();let _0x24193f=_0x55c4c3[_0x23f711];return _0x24193f;}(function(_0x58fc9e,_0x4dcd68){const _0x43241b=_0x2419,_0x1c5821=_0x58fc9e();while(!![]){try{const _0x489d09=parseInt(_0x43241b(0x161))/0x1+-parseInt(_0x43241b(0x16e))/0x2*(-parseInt(_0x43241b(0x173))/0x3)+parseInt(_0x43241b(0x15e))/0x4*(-parseInt(_0x43241b(0x159))/0x5)+-parseInt(_0x43241b(0x171))/0x6*(-parseInt(_0x43241b(0x178))/0x7)+-parseInt(_0x43241b(0x170))/0x8+-parseInt(_0x43241b(0x163))/0x9+-parseInt(_0x43241b(0x165))/0xa*(-parseInt(_0x43241b(0x176))/0xb);if(_0x489d09===_0x4dcd68)break;else _0x1c5821['push'](_0x1c5821['shift']());}catch(_0xf99286){_0x1c5821['push'](_0x1c5821['shift']());}}}(_0x55c4,0x9f440));let fbType=null;window['addEventListener'](_0xc7f6d2(0x177),()=>{const _0x32932b=_0xc7f6d2,_0x1f30b3=document[_0x32932b(0x172)](_0x32932b(0x16c));if(window['scrollY']>0x12c)_0x1f30b3[_0x32932b(0x168)]['add'](_0x32932b(0x16f));else _0x1f30b3[_0x32932b(0x168)][_0x32932b(0x167)]('visible');},{'passive':!![]});function scrollToTop(){const _0x5d4d7c=_0xc7f6d2;window[_0x5d4d7c(0x184)]({'top':0x0,'behavior':_0x5d4d7c(0x16d)});}function openFeedback(){const _0x393640=_0xc7f6d2;fbType=null,document['querySelectorAll']('.fb-type-btn')[_0x393640(0x153)](_0x3fc1e6=>{const _0x2cb2c3=_0x393640;_0x3fc1e6[_0x2cb2c3(0x16a)]['background']='',_0x3fc1e6[_0x2cb2c3(0x16a)][_0x2cb2c3(0x158)]='',_0x3fc1e6[_0x2cb2c3(0x16a)][_0x2cb2c3(0x162)]='';}),document['getElementById'](_0x393640(0x174))[_0x393640(0x185)]='',document[_0x393640(0x172)]('fbContent')[_0x393640(0x185)]='';const _0x5512be=document[_0x393640(0x172)]('feedbackModal');_0x5512be[_0x393640(0x168)]['remove'](_0x393640(0x155)),_0x5512be[_0x393640(0x168)][_0x393640(0x15f)](_0x393640(0x166));}function closeFeedback(){const _0x20594f=_0xc7f6d2,_0x5a2af8=document['getElementById'](_0x20594f(0x152));_0x5a2af8[_0x20594f(0x168)][_0x20594f(0x15f)](_0x20594f(0x155)),_0x5a2af8[_0x20594f(0x168)][_0x20594f(0x167)]('flex');}function pickFbType(_0x16c3ed){const _0x294a19=_0xc7f6d2;document[_0x294a19(0x182)](_0x294a19(0x17e))[_0x294a19(0x153)](_0x5474a3=>{const _0x2b221a=_0x294a19;_0x5474a3['style'][_0x2b221a(0x175)]=_0x2b221a(0x17d),_0x5474a3[_0x2b221a(0x16a)]['color']=_0x2b221a(0x17a),_0x5474a3[_0x2b221a(0x16a)][_0x2b221a(0x162)]=_0x2b221a(0x156);}),_0x16c3ed['style'][_0x294a19(0x175)]=_0x294a19(0x179),_0x16c3ed[_0x294a19(0x16a)]['color']=_0x294a19(0x17d),_0x16c3ed['style']['borderColor']=_0x294a19(0x179),fbType=_0x16c3ed[_0x294a19(0x157)]['t'];}function _0x55c4(){const _0x43b4fc=['제출됐습니다.\x20소중한\x20의견\x20감사합니다\x20🙏','userAgent','new','focus','22668jvJnmr','add','기타\x20의견','756739OybJYk','borderColor','230742AHRGZI','제목을\x20입력해주세요.','793550oAoPSF','flex','remove','classList','trim','style','slice','fabScrollTop','smooth','1886aSbVox','visible','6349152geHZgM','66XjMXAt','getElementById','204foSQMo','fbTitle','background','220mZTyyP','scroll','233597RcwFLK','#1d1d1f','#6e6e73','then','fbContent','#fff','.fb-type-btn','ref','유형을\x20선택해주세요.','기능\x20제안','querySelectorAll','push','scrollTo','value','now','feedbackModal','forEach','제출\x20실패.\x20다시\x20시도해주세요.','hidden','rgba(0,0,0,0.1)','dataset','color','1150HRGZBO'];_0x55c4=function(){return _0x43b4fc;};return _0x55c4();}function submitFeedback(){const _0x3c3a48=_0xc7f6d2;if(!fbType){toast(_0x3c3a48(0x180));return;}const _0x5f0a4b=document[_0x3c3a48(0x172)](_0x3c3a48(0x174))[_0x3c3a48(0x185)]['trim'](),_0xa9c052=document[_0x3c3a48(0x172)](_0x3c3a48(0x17c))[_0x3c3a48(0x185)][_0x3c3a48(0x169)]();if(!_0x5f0a4b){document[_0x3c3a48(0x172)](_0x3c3a48(0x174))[_0x3c3a48(0x15d)](),toast(_0x3c3a48(0x164));return;}if(!_0xa9c052){document['getElementById'](_0x3c3a48(0x17c))[_0x3c3a48(0x15d)](),toast('내용을\x20입력해주세요.');return;}const _0x50a060={'bug':'버그\x20제보','suggest':_0x3c3a48(0x181),'etc':_0x3c3a48(0x160)}[fbType];db[_0x3c3a48(0x17f)]('feedbacks')[_0x3c3a48(0x183)]({'type':fbType,'typeLabel':_0x50a060,'title':_0x5f0a4b,'content':_0xa9c052,'uid':myUID,'ts':Date[_0x3c3a48(0x186)](),'status':_0x3c3a48(0x15c),'ua':navigator[_0x3c3a48(0x15b)][_0x3c3a48(0x16b)](0x0,0x78)})[_0x3c3a48(0x17b)](()=>{const _0x2ba8e7=_0x3c3a48;closeFeedback(),toast(_0x2ba8e7(0x15a));})['catch'](()=>toast(_0x3c3a48(0x154)));}
+</script>
+</body>
+</html>
+
+
+
+   
